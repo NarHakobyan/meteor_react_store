@@ -1,9 +1,12 @@
 {
     "plugins": [
-        ["module-resolver", {
-            "alias": {
-                "imports": "./imports"
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "imports": "./imports"
+                }
             }
-        }]
+        ]
     ]
 }
