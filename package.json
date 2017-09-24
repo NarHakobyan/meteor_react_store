@@ -1,0 +1,23 @@
+{
+  "name": "meteor_react",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "bootstrap": "^4.0.0-alpha.6",
+    "meteor-node-stubs": "~0.2.4",
+    "module-alias": "^2.0.1",
+    "react": "^15.6.1",
+    "react-addons-pure-render-mixin": "^15.6.0",
+    "react-dom": "^15.6.1"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@imports": "imports"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^2.7.1"
+  }
+}
