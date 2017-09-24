@@ -2,6 +2,6 @@
 
 import { Mongo } from 'meteor/mongo';
 
-const Links = new Mongo.Collection('links');
+const Store = new Mongo.Collection('store');
 
-export default Links;
+export default Store;

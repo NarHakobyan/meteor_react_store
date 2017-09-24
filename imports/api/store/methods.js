@@ -2,14 +2,14 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import Links from 'imports/api/links';
+import Store from 'imports/api/store';
 
 Meteor.methods({
-    'links.insert'(title, url) {
+    'store.insert'(title, url) {
         check(url, String);
         check(title, String);
         
-        return Links.insert({
+        return Store.insert({
             url,
             title,
             createdAt: new Date(),

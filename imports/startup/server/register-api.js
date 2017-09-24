@@ -1,4 +1,4 @@
 // Register your apis here
 
-import 'imports/api/links/methods';
-import 'imports/api/links/publications';
+import 'imports/api/store/methods';
+import 'imports/api/store/publications';
