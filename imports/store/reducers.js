@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-const storeReduser = (store, action) => {
+const storeReducer = (store, action) => {
     return store;
 };
 
 export default combineReducers({
-    store: storeReduser,
+    store: storeReducer,
 });

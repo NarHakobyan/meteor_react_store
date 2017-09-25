@@ -22,3 +22,4 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 static-html
 react-meteor-data
 fourseven:scss
+aldeed:simple-schema
