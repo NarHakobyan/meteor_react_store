@@ -24,3 +24,4 @@ react-meteor-data
 fourseven:scss
 aldeed:simple-schema
 accounts-password@1.4.0
+session

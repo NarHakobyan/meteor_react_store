@@ -9,7 +9,12 @@ import './style.css';
 class Login extends Component {
     
     componentWillMount() {
+        Session.set('loading', true);
         Accounts.logout();
+    }
+    
+    componentDidMount() {
+        this.props.showAlert();
     }
     
     handleInputTouch = (event, field) => {
@@ -54,14 +59,15 @@ class Login extends Component {
     
     handleSubmit = (e) => {
         e.preventDefault();
+        Session.set('loading', true);
         Meteor.loginWithPassword(this.state.userInfo.username, this.state.userInfo.password, err => {
             if (err) {
                 console.log(err);
                 return;
             }
+            Session.set('loading', false);
             this.props.navigate('/');
         });
-        console.log('Yepee! form submitted');
     };
     
     renderErrors = (errors) => {

@@ -8,23 +8,31 @@ Meteor.startup(() => {
     if (Store.find().count() === 0) {
         const data = [
             {
-                title: 'Do the Tutorial',
-                url: 'https://www.meteor.com/try',
+                name: 'Do the Tutorial',
+                description: 'https://www.meteor.com/try',
+                incompleteCount: 10,
+                userId: 'EmfkCRqukJSFuG44P',
                 createdAt: new Date(),
             },
             {
-                title: 'Follow the Guide',
-                url: 'http://guide.meteor.com',
+                name: 'Follow the Guide',
+                description: 'http://guide.meteor.com',
+                incompleteCount: 10,
+                userId: 'EmfkCRqukJSFuG44P',
                 createdAt: new Date(),
             },
             {
-                title: 'Read the Docs',
-                url: 'https://docs.meteor.com',
+                name: 'Read the Docs',
+                description: 'https://docs.meteor.com',
+                incompleteCount: 10,
+                userId: 'EmfkCRqukJSFuG44P',
                 createdAt: new Date(),
             },
             {
-                title: 'Discussions',
-                url: 'https://forums.meteor.com',
+                name: 'Discussions',
+                description: 'https://forums.meteor.com',
+                incompleteCount: 10,
+                userId: 'EmfkCRqukJSFuG44P',
                 createdAt: new Date(),
             },
         ];

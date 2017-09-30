@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Session } from 'meteor/session'
+import ReactLoading from 'react-loading';
+import classNames from 'classnames';
 
 class Header extends Component {
     
@@ -46,7 +49,7 @@ class Header extends Component {
                     <span className="navbar-toggler-icon"> </span>
                 </button>
                 <a className="navbar-brand" role="button" onClick={() => this.props.navigate('/')}>Navbar</a>
-                
+                <ReactLoading className={classNames({'visibility-hidden': this.props.loading})} type="spin" color="#444" height="40px" width="40px" />
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     {this.menuRender()}
                     {this.logoutRender()}
@@ -81,5 +84,6 @@ function mapDispatchToProps(dispatch) {
 export default createContainer(() => {
     return {
         userId: Meteor.userId(),
+        loading: !!Session.get('loading'),
     };
 }, connect(mapStateToProps, mapDispatchToProps)(Header));

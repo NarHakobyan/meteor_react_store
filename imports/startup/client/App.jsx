@@ -1,13 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { ConnectedRouter, routerMiddleware, routerReducer } from 'react-router-redux';
 
 import reducers from 'imports/store/reducers';
-import { About, Home, Login, Register } from 'imports/ui/pages';
+import { About, Home, Login, Register, Store } from 'imports/ui/pages';
 import Header from 'imports/ui/layouts/Header.jsx';
+import CustomAlert from 'imports/ui/container/CustomAlert';
 
 const history = createHistory();
 
@@ -18,7 +20,7 @@ export const store = createStore(
         ...reducers,
         router: routerReducer,
     }),
-    applyMiddleware(middleware),
+    applyMiddleware(middleware, thunk),
 );
 
 // store.dispatch(push('/foo'))
@@ -28,11 +30,13 @@ export default () => (
             <div className="container-fluid px-0">
                 <Header/>
                 <div className="container">
-                    <Route exact path="/" component={Home}/>
+                    <Route path="/" exact component={Home}/>
+                    <Route path="/stores" component={Store}/>
                     <Route path="/about" component={About}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                 </div>
+                <CustomAlert/>
             </div>
         </ConnectedRouter>
     </Provider>)
