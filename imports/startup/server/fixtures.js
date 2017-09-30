@@ -31,4 +31,5 @@ Meteor.startup(() => {
         
         data.forEach(link => Store.insert(link));
     }
+    
 });

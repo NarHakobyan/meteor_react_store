@@ -1,28 +1,55 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { createContainer } from 'meteor/react-meteor-data';
 
 class Header extends Component {
+    
+    menuRender() {
+        if (this.props.userId) {
+            return (<ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                    <a className="nav-link" role="button" onClick={() => this.props.navigate('/stores')}>Store</a>
+                </li>
+            </ul>);
+        } else {
+            return (<ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                    <a className="nav-link" role="button" onClick={() => this.props.navigate('/')}>Home <span className="sr-only">(current)</span></a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" role="button" onClick={() => this.props.navigate('/login')}>Login</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" role="button" onClick={() => this.props.navigate('/register')}>Register</a>
+                </li>
+            </ul>);
+        }
+    }
+    
+    logoutRender() {
+        if (this.props.userId) {
+            return (
+                <ul className="navbar-nav">
+                    <li className="nav-item active">
+                        <a className="nav-link" role="button" onClick={() => this.props.navigate('/login')}>Log out</a>
+                    </li>
+                </ul>);
+        }
+    }
+    
     render() {
         return (
-            <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+            <nav className="navbar navbar-toggleable-md navbar-light header-background">
                 <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"> </span>
                 </button>
                 <a className="navbar-brand" role="button" onClick={() => this.props.navigate('/')}>Navbar</a>
                 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" role="button" onClick={() => this.props.navigate('/')}>Home <span className="sr-only">(current)</span></a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" role="button" onClick={() => this.props.navigate('/login')}>Login</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" role="button" onClick={() => this.props.navigate('/register')}>Register</a>
-                        </li>
-                    </ul>
+                    {this.menuRender()}
+                    {this.logoutRender()}
                     <form className="form-inline my-2 my-lg-0">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search"/>
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -51,4 +78,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default createContainer(() => {
+    return {
+        userId: Meteor.userId(),
+    };
+}, connect(mapStateToProps, mapDispatchToProps)(Header));

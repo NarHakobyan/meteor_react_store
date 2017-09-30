@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import CustomValidator from 'imports/utils/validatior';
+import { createContainer } from 'meteor/react-meteor-data';
 
 import './style.css';
 
 class Login extends Component {
+    
+    componentWillMount() {
+        Accounts.logout();
+    }
+    
     handleInputTouch = (event, field) => {
         this.validator.touchField(field);
         this.handleInputChange(event, field);
@@ -48,7 +54,13 @@ class Login extends Component {
     
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        Meteor.loginWithPassword(this.state.userInfo.username, this.state.userInfo.password, err => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            this.props.navigate('/');
+        });
         console.log('Yepee! form submitted');
     };
     
@@ -99,4 +111,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default createContainer(() => {
+    return {
+        userId: Meteor.userId(),
+    };
+}, connect(mapStateToProps, mapDispatchToProps)(Login));

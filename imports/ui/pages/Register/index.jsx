@@ -1,3 +1,4 @@
+import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
@@ -10,6 +11,23 @@ class Register extends Component {
     handleInputTouch = (event, field) => {
         this.validator.touchField(field);
         this.handleInputChange(event, field);
+    };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        Accounts.createUser(this.state.userInfo, (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            this.props.navigate('/');
+        });
+        console.log(this.state);
+        console.log('Yepee! form submitted');
+    };
+    renderErrors = (errors) => {
+        if (errors.length) {
+            return errors.map(error => <span key={error} className="text-danger">{error}</span>);
+        }
     };
     
     constructor() {
@@ -73,18 +91,6 @@ class Register extends Component {
         this.setState(newState);
         this.validator.validate(inputPropName, event.target.value);
     }
-    
-    handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state);
-        console.log('Yepee! form submitted');
-    };
-    
-    renderErrors = (errors) => {
-        if (errors.length) {
-            return errors.map(error => <span key={error} className="text-danger">{error}</span>);
-        }
-    };
     
     render() {
         return (
