@@ -10,6 +10,7 @@ import reducers from 'imports/store/reducers';
 import { About, Home, Login, Register, StoreCreate, StoreList } from 'imports/ui/pages';
 import Header from 'imports/ui/layouts/Header.jsx';
 import CustomAlert from 'imports/ui/container/CustomAlert';
+import authGuard from 'imports/utils/guards/auth.guard';
 
 const history = createHistory();
 
@@ -31,10 +32,10 @@ export default () => (
                 <Header/>
                 <div className="container">
                     <Route path="/" exact component={Home}/>
-                    <Route path="/stores" exact component={StoreList}/>
-                    <Route path="/stores/create" component={StoreCreate}/>
+                    <Route path="/stores" exact component={authGuard(StoreList)}/>
+                    <Route path="/stores/create" component={authGuard(StoreCreate)}/>
                     <Route path="/about" component={About}/>
-                    <Route path="/login" component={Login}/>
+                    <Route name="login" path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                 </div>
                 <CustomAlert/>

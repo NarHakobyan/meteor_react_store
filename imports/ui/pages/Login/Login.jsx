@@ -3,23 +3,34 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import CustomValidator from 'imports/utils/validatior';
 import { createContainer } from 'meteor/react-meteor-data';
+import { hideLoading, showLoading } from 'imports/store/actions/loader.action';
 
 import './style.css';
 
 class Login extends Component {
     
-    componentWillMount() {
-        Session.set('loading', true);
-        Accounts.logout();
-    }
-    
-    componentDidMount() {
-        this.props.showAlert();
-    }
-    
     handleInputTouch = (event, field) => {
         this.validator.touchField(field);
         this.handleInputChange(event, field);
+    };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.showLoading();
+        Meteor.loginWithPassword(this.state.userInfo.username, this.state.userInfo.password, err => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            this.props.hideLoading();
+            const queryParams = new URLSearchParams(this.props.location.search);
+            const redirectLink = queryParams.get('redirect');
+            this.props.navigate(redirectLink || '/');
+        });
+    };
+    renderErrors = (errors) => {
+        if (errors.length) {
+            return errors.map(error => <span key={error} className="text-danger">{error}</span>);
+        }
     };
     
     constructor() {
@@ -32,22 +43,24 @@ class Login extends Component {
         };
         this.validator = new CustomValidator({
                 username: {
-                    rules: [
-                        {
-                            test: (value) => value.length > 2,
-                            message: 'Username must be longer than two characters',
-                        }],
+                    rules: [{
+                        test: (value) => value.length > 2,
+                        message: 'Username must be longer than two characters',
+                    }],
                 },
                 password: {
-                    rules: [
-                        {
-                            test: (value) => value.length >= 6,
-                            message: 'Password must not be shorter than 6 characters',
-                        }],
+                    rules: [{
+                        test: (value) => value.length >= 6,
+                        message: 'Password must not be shorter than 6 characters',
+                    }],
                 },
             },
         );
         this.handleInputChange = this.handleInputChange.bind(this);
+    }
+    
+    componentWillMount() {
+        Accounts.logout();
     }
     
     handleInputChange(event, inputPropName) {
@@ -56,25 +69,6 @@ class Login extends Component {
         this.setState(newState);
         this.validator.validate(inputPropName, event.target.value);
     }
-    
-    handleSubmit = (e) => {
-        e.preventDefault();
-        Session.set('loading', true);
-        Meteor.loginWithPassword(this.state.userInfo.username, this.state.userInfo.password, err => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            Session.set('loading', false);
-            this.props.navigate('/');
-        });
-    };
-    
-    renderErrors = (errors) => {
-        if (errors.length) {
-            return errors.map(error => <span key={error} className="text-danger">{error}</span>);
-        }
-    };
     
     render() {
         return (
@@ -114,6 +108,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         navigate: url => dispatch(push(url)),
+        showLoading: () => dispatch(showLoading()),
+        hideLoading: () => dispatch(hideLoading()),
     };
 }
 
