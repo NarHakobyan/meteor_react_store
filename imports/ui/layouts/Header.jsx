@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Session } from 'meteor/session'
+import { Session } from 'meteor/session';
 import ReactLoading from 'react-loading';
 import classNames from 'classnames';
 
@@ -12,8 +12,11 @@ class Header extends Component {
     menuRender() {
         if (this.props.userId) {
             return (<ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
+                <li className="nav-item">
                     <a className="nav-link" role="button" onClick={() => this.props.navigate('/stores')}>Store</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" role="button" onClick={() => this.props.navigate('/stores/create')}>Create Store</a>
                 </li>
             </ul>);
         } else {

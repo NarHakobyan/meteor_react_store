@@ -7,21 +7,22 @@ import StoreCard from 'imports/ui/components/StoreCard';
 import { connect } from 'react-redux';
 import { showConfirmAlert } from 'imports/store/actions/alert.action';
 
-class StoreComponent extends Component {
+class StoreList extends Component {
     render() {
+        console.log(this.props.stores);
         return (
             <div className="container">{this.props.stores.map(store => <StoreCard key={store['_id']} {...store} onDelete={() => this.props.deleteStore(store['_id'])} />)}</div>
         );
     }
     
     componentDidMount() {
-        console.log(StoreComponent);
+        console.log(StoreList);
     }
     
 }
 
-StoreComponent.propTypes = {};
-StoreComponent.defaultProps = {
+StoreList.propTypes = {};
+StoreList.defaultProps = {
     stores: [],
 };
 
@@ -42,4 +43,4 @@ export default createContainer(() => {
     return {
         stores: Store.find().fetch(),
     };
-}, connect(mapStateToProps, mapDispatchToProps)(StoreComponent));
+}, connect(mapStateToProps, mapDispatchToProps)(StoreList));
