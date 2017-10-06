@@ -7,10 +7,10 @@ function StoreCard(props) {
             <div className="card-header">
                 <ul className="nav nav-pills card-header-pills">
                     <li className="nav-item mx-1">
-                        <a className="btn btn-outline-primary" href="#">Products list</a>
+                        <a className="btn btn-outline-primary pointer" onClick={props.productList}>Products list</a>
                     </li>
                     <li className="nav-item mx-1">
-                        <a className="btn btn-outline-danger" onClick={props.onDelete}>Delete store</a>
+                        <a className="btn btn-outline-danger pointer" onClick={props.onDelete}>Delete store</a>
                     </li>
                 </ul>
             </div>
@@ -29,6 +29,7 @@ StoreCard.propTypes = {
     incompleteCount: PropTypes.number.isRequired,
     userId: PropTypes.string.isRequired,
     onDelete: PropTypes.func.isRequired,
+    productList: PropTypes.func.isRequired,
 };
 StoreCard.defaultProps = {};
 

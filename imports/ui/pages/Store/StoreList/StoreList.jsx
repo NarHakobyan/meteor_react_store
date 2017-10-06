@@ -1,17 +1,25 @@
+import { connect } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import { push } from 'react-router-redux';
 import { createContainer } from 'meteor/react-meteor-data';
+
 import Store from 'imports/api/store';
-import './style.css';
 import StoreCard from 'imports/ui/components/StoreCard';
-import { connect } from 'react-redux';
 import { showConfirmAlert } from 'imports/store/actions/alert.action';
+
+import './style.css';
 
 class StoreList extends Component {
     render() {
         console.log(this.props.stores);
         return (
-            <div className="container">{this.props.stores.map(store => <StoreCard key={store['_id']} {...store} onDelete={() => this.props.deleteStore(store['_id'])} />)}</div>
+            <div className="container">{
+                this.props.stores.map(store => <StoreCard
+                    key={store['_id']} {...store}
+                    onDelete={() => this.props.deleteStore(store['_id'])}
+                    productList={() => this.props.navigate(`/stores/${store['_id']}`)}
+                />)}</div>
         );
     }
     
@@ -26,15 +34,14 @@ StoreList.defaultProps = {
     stores: [],
 };
 
-
 function mapStateToProps(state) {
-    return {
-    };
+    return {};
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        deleteStore: (storeId) => dispatch(showConfirmAlert({text: "are you sure?", onConfirm: () => Meteor.call('store.delete', storeId, console.log)})),
+        navigate: url => dispatch(push(url)),
+        deleteStore: (storeId) => dispatch(showConfirmAlert({ text: 'are you sure?', onConfirm: () => Meteor.call('store.delete', storeId, console.log) })),
     };
 }
 

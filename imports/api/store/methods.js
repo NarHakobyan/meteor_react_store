@@ -21,7 +21,7 @@ Meteor.methods({
             $set: { text: newText },
         });
     },
-    'store.edit'({ storeId, name, description, incompleteCount }) {
+    'store.update'({ storeId, name, description, incompleteCount }) {
         Store.schema.validate({ name, description, incompleteCount });
         const store = Store.findOne(storeId);
         console.log(todo);
