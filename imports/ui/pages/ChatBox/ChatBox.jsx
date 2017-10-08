@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import Chat from 'imports/api/chat';
+import OnlineUsers from 'imports/api/online-users';
 import './style.scss';
 
 class ChatBox extends Component {
@@ -26,22 +27,10 @@ class ChatBox extends Component {
     }
     
     render() {
-        console.log(this.props.chats);
+        console.log(this.props.onlineUsers);
         return (
             <div className="chat-box clearfix">
-                {/*<ChatPeopleList onlineUsers={this.props.onlineUsers} />*/}
-                <ChatPeopleList onlineUsers={[{
-                    name: 'Narek 1',
-                    _id: 1,
-                },
-                    {
-                        name: 'Narek 2',
-                        _id: 2,
-                    },
-                    {
-                        name: 'Narek 3',
-                        _id: 3,
-                    }]}/>
+                <ChatPeopleList onlineUsers={this.props.onlineUsers}/>
                 <div className="chat">
                     <div className="chat-header clearfix">
                         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
@@ -71,8 +60,11 @@ ChatBox.defaultProps = {};
 
 export default createContainer(() => {
     Meteor.subscribe('chat');
+    Meteor.subscribe('online-users');
+    const onlineUserIds = OnlineUsers.find().fetch().map(user => user.userId);
     return {
         chats: Chat.find().fetch(),
+        onlineUsers: Meteor.users.find({ _id: { $in: onlineUserIds } }).fetch(),
         user: Meteor.user(),
     };
 }, ChatBox);

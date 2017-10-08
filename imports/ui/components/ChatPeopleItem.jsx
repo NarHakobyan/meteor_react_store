@@ -7,7 +7,7 @@ function ChatPeopleItem(props) {
             <img src={props.image}
                  alt="avatar"/>
             <div className="about">
-                <div className="name">{props.name}</div>
+                <div className="name">{props.username}</div>
                 <div className="status">
                     <i className="fa fa-circle online"> </i> online
                 </div>
@@ -17,7 +17,7 @@ function ChatPeopleItem(props) {
 }
 
 ChatPeopleItem.propTypes = {
-    name: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
 };
 ChatPeopleItem.defaultProps = {

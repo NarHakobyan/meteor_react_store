@@ -10,7 +10,8 @@ function ChatPeopleList(props) {
                 <i className="fa fa-search"> </i>
             </div>
             <ul className="list">
-                {props.onlineUsers.map(user => <ChatPeopleItem key={user._id} name={user.name} image={user.image}/>)}
+                {props.onlineUsers.map(
+                    user => <ChatPeopleItem key={user._id} username={user.username} image={user.image}/>)}
             </ul>
         </div>
     );
