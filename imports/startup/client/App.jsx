@@ -7,7 +7,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { ConnectedRouter, routerMiddleware, routerReducer } from 'react-router-redux';
 
 import reducers from 'imports/store/reducers';
-import { About, Home, Login, Register, StoreCreate, StoreList, StoreSingle } from 'imports/ui/pages';
+import { About, Chat, Home, Login, Register, StoreCreate, StoreList, StoreSingle } from 'imports/ui/pages';
 import Header from 'imports/ui/layouts/Header.jsx';
 import CustomAlert from 'imports/ui/container/CustomAlert';
 import authGuard from 'imports/utils/guards/auth.guard';
@@ -35,6 +35,7 @@ export default () => (
                     <Route path="/stores" exact component={authGuard(StoreList)}/>
                     <Route path="/stores/create" component={authGuard(StoreCreate)}/>
                     <Route path="/stores/:id" component={authGuard(StoreSingle)}/>
+                    <Route path="/chat" component={Chat}/>
                     <Route path="/about" component={About}/>
                     <Route name="login" path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
